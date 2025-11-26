@@ -28,3 +28,18 @@ A sample MySQL 8 database for analyzing e-commerce sales. Includes tables for cu
 - order_id (INT, FK)
 - product_id (INT, FK)
 - quantity (INT)
+
+## Sample Query
+
+Calculate total revenue by country:
+
+```sql
+SELECT 
+  cu.country,
+  SUM(oi.quantity * p.price) AS revenue
+FROM customers cu
+JOIN orders o ON cu.customer_id = o.customer_id
+JOIN order_items oi ON o.order_id = oi.order_id
+JOIN products p ON oi.product_id = p.product_id
+GROUP BY cu.country
+ORDER BY revenue DESC;
